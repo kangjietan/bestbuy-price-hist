@@ -55,6 +55,12 @@ const config: Configuration = {
     port: 3001,
     hot: true,
     contentBase: DIST_DIR,
+    proxy: [
+      {
+        context: ["/api"],
+        target: "http://localhost:3000",
+      },
+    ],
   },
 };
 
