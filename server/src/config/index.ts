@@ -14,4 +14,5 @@ export default {
     prefix: "/api",
   },
   databaseURL: process.env.MONGO_URI,
+  bestBuyKey: process.env.BEST_BUY_API_KEY,
 };
