@@ -13,4 +13,5 @@ export default {
   api: {
     prefix: "/api",
   },
+  databaseURL: process.env.MONGO_URI,
 };
