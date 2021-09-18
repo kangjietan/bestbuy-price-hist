@@ -1,4 +1,4 @@
-interface Product {
+export default interface Product {
   sku: number;
   score: unknown;
   productId: unknown;
