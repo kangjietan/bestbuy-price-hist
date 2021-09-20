@@ -18,7 +18,7 @@ export default interface Product {
   priceWithPlan: [];
   contracts: [];
   priceRestriction: unknown;
-  priceUpdateDate: "2021-09-07T05:44:52";
+  priceUpdateDate: string;
   digital: boolean;
   preowned: boolean;
   carriers: [];
@@ -28,10 +28,10 @@ export default interface Product {
   technologyCode: unknown;
   carrierModelNumber: unknown;
   earlyTerminationFees: [];
-  monthlyRecurringCharge: "";
-  monthlyRecurringChargeGrandTotal: "";
-  activationCharge: "";
-  minutePrice: "";
+  monthlyRecurringCharge: string;
+  monthlyRecurringChargeGrandTotal: string;
+  activationCharge: string;
+  minutePrice: string;
   planCategory: unknown;
   planType: unknown;
   familyIndividualCode: unknown;
