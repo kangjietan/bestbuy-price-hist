@@ -1,6 +1,6 @@
 import axios from "axios";
 import config from "../config";
-import { BestBuyProduct as BestBuyProductInterface } from "@/interfaces";
+import { BestBuyProduct as BestBuyProductInterface } from "../interfaces";
 
 const productsBaseUrl = "https://api.bestbuy.com/v1/products";
 const apiKey = config.bestBuyKey;
