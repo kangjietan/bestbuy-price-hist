@@ -8,6 +8,13 @@ interface ItemRecord extends ItemInterface {
   _id: mongoose.Types.ObjectId;
 }
 
+interface PriceUpdate {
+  historicalLowPrice?: number;
+  historicalLowPriceDate?: Date;
+  historicalHighPrice?: number;
+  historicalHighPriceDate?: Date;
+}
+
 /**
  * Add item to database if sku already does not exist.
  * Fetch prices and create document in prices collection as well.
@@ -22,13 +29,13 @@ export const addItem = async (sku) => {
     });
 
     const productInfo = await getProduct(sku);
-    const { regularPrice, priceUpdateDate } = productInfo;
+    const { salePrice, priceUpdateDate } = productInfo;
     const recordUpdatedWithPrices = {
-      currentPrice: regularPrice,
+      currentPrice: salePrice,
       priceUpdatedAt: priceUpdateDate,
-      historicalLowPrice: regularPrice,
+      historicalLowPrice: salePrice,
       historicalLowPriceDate: priceUpdateDate,
-      historicalHighPrice: regularPrice,
+      historicalHighPrice: salePrice,
       historicalHighPriceDate: priceUpdateDate,
     };
 
@@ -37,7 +44,7 @@ export const addItem = async (sku) => {
 
     addPriceRecord(sku, {
       itemSku: sku,
-      price: regularPrice,
+      price: salePrice,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -56,4 +63,8 @@ export const fetchAllItems = async () => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const updateItemHistoricals = async (sku: number, data: PriceUpdate) => {
+  await Item.updateOne({ sku }, data);
 };
