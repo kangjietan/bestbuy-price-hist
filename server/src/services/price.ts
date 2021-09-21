@@ -11,16 +11,19 @@ interface PriceRecord {
 
 export const addPriceRecord = async (sku, data?: PriceRecord) => {
   if (data) {
-    await Price.create(data);
+    const priceRecord = await Price.create(data);
+    return priceRecord;
   } else {
     const productInfo = await getProduct(sku);
-    const { regularPrice, priceUpdateDate } = productInfo;
+    const { salePrice } = productInfo;
 
-    const priceRecord = Price.create({
+    const priceRecord = await Price.create({
       itemSku: sku,
-      price: regularPrice,
+      price: salePrice,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
+
+    return priceRecord;
   }
 };
