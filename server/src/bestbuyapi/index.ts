@@ -6,7 +6,7 @@ const productsBaseUrl = "https://api.bestbuy.com/v1/products";
 const apiKey = config.bestBuyKey;
 const responseFormat = "&format=json";
 
-export const getProduct = async (sku) => {
+export const getProduct = async (sku: number) => {
   const getProductsUrl = `${productsBaseUrl}(sku=${sku})?apiKey=${apiKey}${responseFormat}`;
   try {
     const response = await axios.get(getProductsUrl);
