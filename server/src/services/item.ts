@@ -20,7 +20,7 @@ interface PriceUpdate {
  * Fetch prices and create document in prices collection as well.
  * @param sku Product sku
  */
-export const addItem = async (sku) => {
+export const addItem = async (sku: number) => {
   try {
     const itemRecord = await Item.create({
       sku,
@@ -66,5 +66,9 @@ export const fetchAllItems = async () => {
 };
 
 export const updateItemHistoricals = async (sku: number, data: PriceUpdate) => {
-  await Item.updateOne({ sku }, data);
+  try {
+    await Item.updateOne({ sku }, data);
+  } catch (error) {
+    console.log(error);
+  }
 };
