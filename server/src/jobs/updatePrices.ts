@@ -40,8 +40,6 @@ const comparePricesAndUpdate = async (item: ItemInterface) => {
     const productInfo = await getProduct(sku);
     const { salePrice, priceUpdateDate } = productInfo;
 
-    console.log(sku);
-
     if (salePrice === currentPrice) return;
 
     const priceRecord = await addPriceRecord(sku, {
@@ -57,17 +55,21 @@ const comparePricesAndUpdate = async (item: ItemInterface) => {
      * Higher than historicalHigh
      */
 
-    if (historicalLowPrice < salePrice) {
-      updateItemHistoricals(sku, {
+    if (salePrice < historicalLowPrice) {
+      await updateItemHistoricals(sku, {
         historicalLowPrice: salePrice,
         historicalLowPriceDate: new Date(priceUpdateDate),
+        currentPrice: salePrice,
+        priceUpdatedAt: new Date(priceUpdateDate),
       });
     }
 
-    if (historicalHighPrice > salePrice) {
-      updateItemHistoricals(sku, {
+    if (salePrice > historicalHighPrice) {
+      await updateItemHistoricals(sku, {
         historicalHighPrice: salePrice,
         historicalHighPriceDate: new Date(priceUpdateDate),
+        currentPrice: salePrice,
+        priceUpdatedAt: new Date(priceUpdateDate),
       });
     }
 
