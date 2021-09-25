@@ -8,7 +8,7 @@ const apiKey = config.bestBuyKey;
 const responseFormat = "&format=json";
 
 const limiter = new RateLimiter({
-  tokensPerInterval: 3,
+  tokensPerInterval: 2,
   interval: "second",
 });
 
