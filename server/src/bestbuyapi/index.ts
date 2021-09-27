@@ -12,7 +12,7 @@ const limiter = new RateLimiter({
   interval: "second",
 });
 
-export const getProduct = async (sku: number) => {
+export const fetchProduct = async (sku: number) => {
   const getProductsUrl = `${productsBaseUrl}(sku=${sku})?apiKey=${apiKey}${responseFormat}`;
   try {
     const remainingRequests = await limiter.removeTokens(1);
