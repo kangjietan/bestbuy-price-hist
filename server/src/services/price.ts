@@ -1,5 +1,5 @@
 import Price from "../models/price";
-import { getProduct } from "../bestbuyapi";
+import { fetchProduct } from "../bestbuyapi";
 
 interface PriceRecord {
   itemSku: number;
@@ -15,7 +15,7 @@ export const addPriceRecord = async (sku: number, data?: PriceRecord) => {
       const priceRecord = await Price.create(data);
       return priceRecord;
     } else {
-      const productInfo = await getProduct(sku);
+      const productInfo = await fetchProduct(sku);
       const { salePrice } = productInfo;
 
       const priceRecord = await Price.create({

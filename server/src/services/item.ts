@@ -1,5 +1,5 @@
 import Item from "../models/item";
-import { getProduct } from "../bestbuyapi";
+import { fetchProduct } from "../bestbuyapi";
 import { addPriceRecord } from "./price";
 import { Item as ItemInterface } from "../interfaces";
 import mongoose from "mongoose";
@@ -37,7 +37,7 @@ export const addItem = async (sku: number) => {
       updatedAt: new Date(),
     });
 
-    const productInfo = await getProduct(sku);
+    const productInfo = await fetchProduct(sku);
     const { salePrice, priceUpdateDate } = productInfo;
 
     const recordUpdatedWithPrices = {
@@ -51,7 +51,7 @@ export const addItem = async (sku: number) => {
     Object.assign(itemRecord, recordUpdatedWithPrices);
     itemRecord.save();
 
-    addPriceRecord(sku, {
+    await addPriceRecord(sku, {
       itemSku: sku,
       price: salePrice,
       createdAt: new Date(),

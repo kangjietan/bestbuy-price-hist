@@ -1,7 +1,7 @@
 import cron from "node-cron";
 import { fetchAllItems, updateItemHistoricals } from "../services/item";
 import { addPriceRecord } from "../services/price";
-import { getProduct } from "../bestbuyapi";
+import { fetchProduct } from "../bestbuyapi";
 import { Item as ItemInterface } from "../interfaces";
 
 const updateItemPrices = async () => {
@@ -37,7 +37,7 @@ const comparePricesAndUpdate = async (item: ItemInterface) => {
       historicalHighPrice,
     } = item;
 
-    const productInfo = await getProduct(sku);
+    const productInfo = await fetchProduct(sku);
     const { salePrice, priceUpdateDate } = productInfo;
 
     if (salePrice === currentPrice) return;
