@@ -31,3 +31,12 @@ export const addPriceRecord = async (sku: number, data?: PriceRecord) => {
     console.log(error);
   }
 };
+
+export const fetchAllPriceRecordsBySku = async (sku: number) => {
+  try {
+    const prices = await Price.find({ itemSku: sku });
+    return prices;
+  } catch (error) {
+    console.log(error);
+  }
+};
