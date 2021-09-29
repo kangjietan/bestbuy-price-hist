@@ -57,8 +57,6 @@ export const addItem = async (sku: number) => {
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-
-    console.log("Inserted Item");
   } catch (error) {
     console.log("Failed to insert");
     console.log(error);
@@ -69,6 +67,17 @@ export const fetchAllItems = async () => {
   try {
     const allItems: ItemRecord[] = await Item.find({});
     return allItems;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateItemCurrentPrice = async (
+  sku: number,
+  data: ItemPriceUpdate
+) => {
+  try {
+    await Item.updateOne({ sku }, data);
   } catch (error) {
     console.log(error);
   }
