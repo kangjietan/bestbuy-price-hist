@@ -1,5 +1,9 @@
 import cron from "node-cron";
-import { fetchAllItems, updateItemHistoricals } from "../services/item";
+import {
+  fetchAllItems,
+  updateItemHistoricals,
+  updateItemCurrentPrice,
+} from "../services/item";
 import { addPriceRecord } from "../services/price";
 import { fetchProduct } from "../bestbuyapi";
 import { Item as ItemInterface } from "../interfaces";
@@ -27,7 +31,7 @@ export const fetchItemsAndUpdate = async () => {
   }
 };
 
-const comparePricesAndUpdate = async (item: ItemInterface) => {
+export const comparePricesAndUpdate = async (item: ItemInterface) => {
   try {
     const {
       currentPrice,
@@ -62,6 +66,8 @@ const comparePricesAndUpdate = async (item: ItemInterface) => {
         currentPrice: salePrice,
         priceUpdatedAt: new Date(priceUpdateDate),
       });
+
+      return priceRecord;
     }
 
     if (salePrice > historicalHighPrice) {
@@ -71,7 +77,14 @@ const comparePricesAndUpdate = async (item: ItemInterface) => {
         currentPrice: salePrice,
         priceUpdatedAt: new Date(priceUpdateDate),
       });
+
+      return priceRecord;
     }
+
+    await updateItemCurrentPrice(sku, {
+      currentPrice: salePrice,
+      priceUpdatedAt: new Date(priceUpdateDate),
+    });
 
     return priceRecord;
   } catch (error) {
