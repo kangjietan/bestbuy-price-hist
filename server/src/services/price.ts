@@ -34,7 +34,9 @@ export const addPriceRecord = async (sku: number, data?: PriceRecord) => {
 
 export const fetchAllPriceRecordsBySku = async (sku: number) => {
   try {
-    const prices = await Price.find({ itemSku: sku });
+    const prices = await Price.find({ itemSku: sku }, null, {
+      sort: { createdAt: "ascending" },
+    });
     return prices;
   } catch (error) {
     console.log(error);
