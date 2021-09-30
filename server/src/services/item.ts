@@ -11,6 +11,7 @@ interface ItemRecord extends ItemInterface {
 interface ItemPriceUpdate {
   currentPrice: number;
   priceUpdatedAt: Date;
+  updatedAt: Date;
 }
 
 interface PriceUpdateLow extends ItemPriceUpdate {
