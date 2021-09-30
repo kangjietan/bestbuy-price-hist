@@ -65,6 +65,7 @@ export const comparePricesAndUpdate = async (item: ItemInterface) => {
         historicalLowPriceDate: new Date(priceUpdateDate),
         currentPrice: salePrice,
         priceUpdatedAt: new Date(priceUpdateDate),
+        updatedAt: new Date(),
       });
 
       return priceRecord;
@@ -76,6 +77,7 @@ export const comparePricesAndUpdate = async (item: ItemInterface) => {
         historicalHighPriceDate: new Date(priceUpdateDate),
         currentPrice: salePrice,
         priceUpdatedAt: new Date(priceUpdateDate),
+        updatedAt: new Date(),
       });
 
       return priceRecord;
@@ -84,6 +86,7 @@ export const comparePricesAndUpdate = async (item: ItemInterface) => {
     await updateItemCurrentPrice(sku, {
       currentPrice: salePrice,
       priceUpdatedAt: new Date(priceUpdateDate),
+      updatedAt: new Date(),
     });
 
     return priceRecord;
