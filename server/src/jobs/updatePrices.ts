@@ -42,6 +42,10 @@ export const comparePricesAndUpdate = async (item: ItemInterface) => {
     } = item;
 
     const productInfo = await fetchProduct(sku);
+    if (!productInfo) {
+      console.log(`${sku} info not available`);
+      return;
+    }
     const { salePrice, priceUpdateDate } = productInfo;
 
     if (salePrice === currentPrice) return;
