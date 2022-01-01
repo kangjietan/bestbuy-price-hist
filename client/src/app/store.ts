@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import logger from "redux-logger";
 
-import { listApi } from "../services/list";
+import listReducer from "../features/list/listSlice";
+import { itemApi } from "../services/item";
+import { bestBuyApi } from "../services/bestBuy";
 
-const extraMiddleware = [listApi.middleware];
+const extraMiddleware = [itemApi.middleware, bestBuyApi.middleware];
 
 const developmentMiddleware = [logger];
 process.env.NODE_ENV !== "production" &&
@@ -12,7 +14,9 @@ process.env.NODE_ENV !== "production" &&
 
 export const store = configureStore({
   reducer: {
-    [listApi.reducerPath]: listApi.reducer,
+    list: listReducer,
+    [itemApi.reducerPath]: itemApi.reducer,
+    [bestBuyApi.reducerPath]: bestBuyApi.reducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(extraMiddleware);
