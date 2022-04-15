@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import ItemCard from "../ItemCard/ItemCard";
 
 import Stack from "@mui/material/Stack";
-import { Container, Pagination } from "./styles";
+import { Container, Pagination, ListContainer } from "./styles";
 
 import { Item } from "../../interfaces";
 
@@ -19,23 +19,30 @@ const List: React.FC<ListProps> = ({ list }) => {
   ) => {
     setPage(value);
   };
-  const listStart = (page - 1) * 10;
-  const listEnd = page * 10;
-  console.log(listStart, listEnd);
+  const listStart = (page - 1) * 12;
+  const listEnd = page * 12;
   return (
     <Container maxWidth="xl">
-      <Stack spacing={3}>
+      <Stack spacing={5}>
         {list && (
           <Pagination
             size="large"
             shape="rounded"
-            count={Math.ceil(list.length / 10)}
+            count={Math.ceil(list.length / 12)}
             onChange={handlePageChange}
           />
         )}
-        {list.slice(listStart, listEnd).map((item) => (
-          <ItemCard item={item} />
-        ))}
+        <ListContainer
+          direction={{ xs: "column", md: "row" }}
+          flexWrap="wrap"
+          justifyContent="space-evenly"
+          alignItems="center"
+          gap="1rem"
+        >
+          {list.slice(listStart, listEnd).map((item) => (
+            <ItemCard item={item} />
+          ))}
+        </ListContainer>
       </Stack>
     </Container>
   );
