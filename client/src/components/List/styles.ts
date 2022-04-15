@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import MuiContainer from "@mui/material/Container";
 import MuiPagination from "@mui/material/Pagination";
+import Stack from '@mui/material/Stack';
 
 export const Container = styled(MuiContainer)`
   display: flex;
@@ -21,3 +22,5 @@ export const Pagination = styled(MuiPagination)`
     border-radius: 4px;
   }
 `;
+
+export const ListContainer = styled(Stack)``;
