@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import logger from "redux-logger";
 
 import listReducer from "../features/list/listSlice";
+import modalReducer from "../features/modal/modalSlice";
 import { itemApi } from "../services/item";
 import { bestBuyApi } from "../services/bestBuy";
 
@@ -15,6 +16,7 @@ process.env.NODE_ENV !== "production" &&
 export const store = configureStore({
   reducer: {
     list: listReducer,
+    modal: modalReducer,
     [itemApi.reducerPath]: itemApi.reducer,
     [bestBuyApi.reducerPath]: bestBuyApi.reducer,
   },
