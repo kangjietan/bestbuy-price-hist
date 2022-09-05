@@ -7,6 +7,7 @@ export const bestBuyApi = createApi({
   endpoints: (builder) => ({
     fetchBestBuyProductInfo: builder.query<BestBuyProduct, number>({
       query: (sku) => `product/${sku}`,
+      keepUnusedDataFor: 3600,
     }),
   }),
 });
