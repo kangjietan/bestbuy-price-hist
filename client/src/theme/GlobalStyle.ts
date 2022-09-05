@@ -10,10 +10,6 @@ const GlobalStyle = createGlobalStyle`
     --text-color: #F2F2F2;
   }
 
-  body {
-    background-color: var(--bg-color);
-  }
-
   ${Sanitize}
 `;
 
