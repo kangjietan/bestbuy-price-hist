@@ -23,7 +23,7 @@ export const CardContainer = styled(Card)<CardContainerProps>`
   flex-direction: column;
   transition: all 1s ease-in;
   width: 350px;
-  height: 400px;
+  min-height: 400px;
   padding: 10px;
   cursor: pointer;
 `;
@@ -32,6 +32,7 @@ export const ProductName = styled.div`
   transition: all 0.2s ease-in;
   margin-bottom: 1rem;
   text-align: center;
+  font-weight: 700;
 `;
 
 export const Image = styled.img`
@@ -41,7 +42,9 @@ export const Image = styled.img`
   transition: all 0.2s ease-in;
 `;
 
-export const ProductPrice = styled(Typography)``;
+export const ProductPrice = styled(Typography)`
+  font-weight: 500 !important;
+`;
 
 export const Loading = styled(CircularProgress)``;
 
