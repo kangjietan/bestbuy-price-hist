@@ -2,13 +2,22 @@ import React from "react";
 
 import { Line } from "react-chartjs-2";
 import { ChartOptions, ChartData } from "chart.js";
+import Zoom from "@mui/material/Zoom";
 
 import { BestBuyProduct } from "../../interfaces";
-import { useFetchAllItemPricesQuery } from "../../services/item";
 import {
+  useFetchAllItemPricesQuery,
+  useFetchAllItemsQuery,
+} from "../../services/item";
+import {
+  ModalContentAnchor,
+  ModalContentCloseButtonContainer,
+  ModalContentCloseLeftLine,
+  ModalContentCloseRightLine,
   ModalContentContainer,
   ModalContentGraphContainer,
   ModalContentHeader,
+  ModalContentHeaderContainer,
   ModalContentImage,
   ModalContentName,
 } from "./styles";
@@ -16,13 +25,15 @@ import {
 interface ProductModalProps {
   handleClose: () => void;
   handleOpen: () => void;
-  selectedProduct: BestBuyProduct | { image: ""; sku: 0; name: "" };
+  selectedProduct: BestBuyProduct | { image: ""; sku: 0; name: ""; url: "" };
+  open: boolean;
 }
 
 const ProductModal: React.FC<ProductModalProps> = ({
   handleClose,
   handleOpen,
   selectedProduct,
+  open,
 }) => {
   const {
     data = [],
@@ -32,14 +43,18 @@ const ProductModal: React.FC<ProductModalProps> = ({
   } = useFetchAllItemPricesQuery(selectedProduct.sku);
   const { image, name } = selectedProduct;
 
+  const { data: list = [] } = useFetchAllItemsQuery();
+
+  const product = list.find((element) => element.sku === selectedProduct.sku);
+
   const createDataSet = () => {
     const labels: string[] = [];
     const dataPoints: number[] = [];
     data.forEach((record) => {
       const date = new Date(record.createdAt);
-      const dateString = date.toLocaleDateString()
-      const dateArr = dateString.split("/")
-      dateArr[dateArr.length - 1] = dateArr[dateArr.length - 1].slice(-2)
+      const dateString = date.toLocaleDateString();
+      const dateArr = dateString.split("/");
+      dateArr[dateArr.length - 1] = dateArr[dateArr.length - 1].slice(-2);
       labels.push(dateArr.join("/"));
       dataPoints.push(record.price);
     });
@@ -73,15 +88,30 @@ const ProductModal: React.FC<ProductModalProps> = ({
   };
 
   return (
-    <ModalContentContainer>
-      <ModalContentHeader>
-        <ModalContentImage src={image} />
-        <ModalContentName>{name}</ModalContentName>
-      </ModalContentHeader>
-      <ModalContentGraphContainer>
-        <Line data={graphDataSet} options={options} />
-      </ModalContentGraphContainer>
-    </ModalContentContainer>
+    <Zoom in={open} style={{ transitionDelay: open ? "150ms" : "0ms" }}>
+      <ModalContentContainer maxWidth="xl">
+        <ModalContentHeaderContainer>
+          <ModalContentHeader>
+            <ModalContentAnchor href={selectedProduct.url} target="_blank">
+              <ModalContentImage src={image} />
+            </ModalContentAnchor>
+            <ModalContentAnchor href={selectedProduct.url} target="_blank">
+              <ModalContentName>{name}</ModalContentName>
+            </ModalContentAnchor>
+          </ModalContentHeader>
+          <ModalContentCloseButtonContainer onClick={handleClose}>
+            <ModalContentCloseLeftLine></ModalContentCloseLeftLine>
+            <ModalContentCloseRightLine></ModalContentCloseRightLine>
+          </ModalContentCloseButtonContainer>
+        </ModalContentHeaderContainer>
+        <ModalContentGraphContainer>
+          <Line data={graphDataSet} options={options} />
+        </ModalContentGraphContainer>
+        <ModalContentGraphContainer>
+          <div>{product?.historicalHighPrice}</div>
+        </ModalContentGraphContainer>
+      </ModalContentContainer>
+    </Zoom>
   );
 };
 
