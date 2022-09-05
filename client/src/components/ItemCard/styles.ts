@@ -43,13 +43,12 @@ export const Image = styled.img`
 
 export const ProductPrice = styled(Typography)``;
 
-export const DropDownContainer = styled.div``;
-
 export const Loading = styled(CircularProgress)``;
 
 export const Accordion = styled(MuiAccordion)`
   text-align: center;
   padding: 0.5rem;
+  width: 100%;
 `;
 
 export const ProductNotSoldText = styled(Typography)``
