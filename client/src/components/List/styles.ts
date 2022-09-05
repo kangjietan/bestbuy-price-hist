@@ -28,4 +28,5 @@ export const Modal = styled(MuiModal)`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 1rem;
 `;
