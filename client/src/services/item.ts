@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Item } from "../interfaces";
+import { Item, Price } from "../interfaces";
 
 export const itemApi = createApi({
   reducerPath: "itemApi",
@@ -7,8 +7,13 @@ export const itemApi = createApi({
   endpoints: (builder) => ({
     fetchAllItems: builder.query<Item[], void>({
       query: () => `list`,
+      keepUnusedDataFor: 3600,
+    }),
+    fetchAllItemPrices: builder.query<Price[], number>({
+      query: (sku) => `prices/${sku}`,
+      keepUnusedDataFor: 3600,
     }),
   }),
 });
 
-export const { useFetchAllItemsQuery } = itemApi;
+export const { useFetchAllItemsQuery, useFetchAllItemPricesQuery } = itemApi;
