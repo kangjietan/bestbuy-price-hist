@@ -37,6 +37,7 @@ const List: React.FC<ListProps> = ({ list }) => {
           handleOpen={handleOpen}
           handleClose={handleClose}
           selectedProduct={selectedProduct}
+          open={open}
         />
       </Modal>
       <Stack spacing={5}>
