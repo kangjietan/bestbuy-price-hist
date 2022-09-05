@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { BestBuyProduct } from "../../interfaces";
 
 export interface ModalState {
-  selectedProduct: BestBuyProduct | { image: ""; sku: 0; name: "" };
+  selectedProduct: BestBuyProduct | { image: ""; sku: 0; name: ""; url: "" };
 }
 
 const initialState: ModalState = {
@@ -10,6 +10,7 @@ const initialState: ModalState = {
     image: "",
     sku: 0,
     name: "",
+    url: "",
   },
 };
 
