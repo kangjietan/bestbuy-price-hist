@@ -49,7 +49,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, openModal }) => {
           variant="h6"
           sx={{ color: "var(--secondary-color)" }}
         >{`$${data.salePrice}`}</ProductPrice>
-        <ProductPrice>{`List Price: $${data.regularPrice}`}</ProductPrice>
+        <ProductPrice>{`Reg Price: $${data.regularPrice}`}</ProductPrice>
       </Accordion>
     </CardContainer>
   ) : (
