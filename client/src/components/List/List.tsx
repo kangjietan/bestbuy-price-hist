@@ -3,35 +3,43 @@ import React, { useState } from "react";
 import ItemCard from "../ItemCard/ItemCard";
 
 import Stack from "@mui/material/Stack";
-import { Container, Pagination, ListContainer } from "./styles";
+import { Container, Pagination, ListContainer, Modal } from "./styles";
 
 import { Item } from "../../interfaces";
+import { useAppSelector } from "../../app/hooks";
+import ProductModalContent from "../ProductModal/ProductModalContent";
 
 interface ListProps {
   list: Item[];
 }
 
 const List: React.FC<ListProps> = ({ list }) => {
+  const itemsPerPage = 12;
+  const selectedProduct = useAppSelector(
+    (state) => state.modal.selectedProduct
+  );
   const [page, setPage] = useState(1);
+  const [open, setOpen] = useState(false);
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setPage(value);
   };
-  const listStart = (page - 1) * 12;
-  const listEnd = page * 12;
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const listStart = (page - 1) * itemsPerPage;
+  const listEnd = page * itemsPerPage;
   return (
     <Container maxWidth="xl">
+      <Modal open={open} onClose={handleClose}>
+        <ProductModalContent
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+          selectedProduct={selectedProduct}
+        />
+      </Modal>
       <Stack spacing={5}>
-        {list && (
-          <Pagination
-            size="large"
-            shape="rounded"
-            count={Math.ceil(list.length / 12)}
-            onChange={handlePageChange}
-          />
-        )}
         <ListContainer
           direction={{ xs: "column", md: "row" }}
           flexWrap="wrap"
@@ -40,9 +48,17 @@ const List: React.FC<ListProps> = ({ list }) => {
           gap="1rem"
         >
           {list.slice(listStart, listEnd).map((item) => (
-            <ItemCard item={item} />
+            <ItemCard item={item} key={item.sku} openModal={handleOpen} />
           ))}
         </ListContainer>
+        {list && (
+          <Pagination
+            size="large"
+            shape="rounded"
+            count={Math.ceil(list.length / itemsPerPage)}
+            onChange={handlePageChange}
+          />
+        )}
       </Stack>
     </Container>
   );
