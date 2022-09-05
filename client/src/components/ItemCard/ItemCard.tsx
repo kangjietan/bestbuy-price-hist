@@ -6,7 +6,6 @@ import {
   CardContainer,
   Image,
   ProductName,
-  GlassContainer,
   Loading,
   ProductPrice,
   Accordion,
@@ -27,38 +26,37 @@ const ItemCard: React.FC<ItemCardProps> = ({ item, openModal }) => {
   const [hoverShadow, setHoverShadow] = useState(2);
   const [showRegularPrice, setShowRegularPrice] = useState(false);
 
-  if (data) {
-    return (
-      <CardContainer
-        sx={{ boxShadow: hoverShadow, bgcolor: "white" }}
-        onMouseEnter={() => {
-          setHoverShadow(3);
-          setShowRegularPrice(true);
-        }}
-        onMouseLeave={() => {
-          setHoverShadow(1);
-          setShowRegularPrice(false);
-        }}
-        onClick={() => {
-          dispatch(setCurrentProduct(data));
-          openModal();
-        }}
-      >
-        <ProductName>{data.name}</ProductName>
-        <Image src={data.image} />
-        <Accordion expanded={showRegularPrice}>
-          <ProductPrice>{`$${data.salePrice}`}</ProductPrice>
-          <ProductPrice>{`List Price: $${data.regularPrice}`}</ProductPrice>
-        </Accordion>
-      </CardContainer>
-    );
-  }
-
-  return (
+  return data ? (
+    <CardContainer
+      sx={{ boxShadow: hoverShadow, bgcolor: "white" }}
+      onMouseEnter={() => {
+        setHoverShadow(3);
+        setShowRegularPrice(true);
+      }}
+      onMouseLeave={() => {
+        setHoverShadow(1);
+        setShowRegularPrice(false);
+      }}
+      onClick={() => {
+        dispatch(setCurrentProduct(data));
+        openModal();
+      }}
+    >
+      <ProductName>{data.name}</ProductName>
+      <Image src={data.image} />
+      <Accordion expanded={showRegularPrice}>
+        <ProductPrice
+          variant="h6"
+          sx={{ color: "var(--secondary-color)" }}
+        >{`$${data.salePrice}`}</ProductPrice>
+        <ProductPrice>{`List Price: $${data.regularPrice}`}</ProductPrice>
+      </Accordion>
+    </CardContainer>
+  ) : (
     <CardContainer centerElements>
       {!isLoading ? (
         <ProductNotSoldText>
-          This item is no longer being sold.
+          {error || `Failed to retrieve information for ${sku}.`}
         </ProductNotSoldText>
       ) : (
         <Loading />
