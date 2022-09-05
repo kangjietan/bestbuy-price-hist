@@ -8,6 +8,11 @@ const GlobalStyle = createGlobalStyle`
     --secondary-variant-color: #3B945E;
     --bg-color: #65CCB8;
     --text-color: #F2F2F2;
+    --primary-font: 'Roboto', sans-serif;
+  }
+
+  body {
+    font-family: var(--primary-font);
   }
 
   ${Sanitize}
