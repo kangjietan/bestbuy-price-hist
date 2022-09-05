@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import Navbar from "./Navbar/Navbar";
 import List from "./List/List";
@@ -7,6 +7,17 @@ import GlobalStyle from "../theme/GlobalStyle";
 
 import { useFetchAllItemsQuery } from "../services/item";
 
+import {
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+} from 'chart.js';
+ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend, CategoryScale);
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -14,6 +25,7 @@ const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   margin-top: 100px;
+  margin-bottom: 50px;
 `;
 
 const App: React.FC = () => {
